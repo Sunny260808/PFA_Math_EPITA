@@ -30,6 +30,58 @@ double integrate_dx(double (*f)(double), double a, double b, double dx, QuadForm
   return 0.0;
 }
 
+double integrate_left(double (*f)(double), double a, double b, double dx){
+    int nb_sub=(b-a)/dx;
+    double res=0;
+    double ai=a;
+    if(a>b){
+        nb_sub=(a-b)/dx;
+        ai=b;
+    }
+    double bi=a+dx;
+    for(int i=0;i<nb_sub;i++){
+        res+=(bi-ai)*f(ai);
+        ai=bi;
+        bi+=dx;
+    }
+    return res;
+}
+
+double integrate_right(double (*f)(double), double a, double b, double dx){
+    int nb_sub=(b-a)/dx;
+    double res=0;
+    double ai=a;
+    if(a>b){
+        nb_sub=(a-b)/dx;
+        ai=b;
+    }
+    double bi=a+dx;
+    for(int i=0;i<nb_sub;i++){
+        res+=(bi-ai)*f(bi);
+        ai=bi;
+        bi+=dx;
+    }
+    return res;
+}
+
+double integrate_middle(double (*f)(double), double a, double b, double dx){
+    int nb_sub=(b-a)/dx;
+    double res=0;
+    double ai=a;
+    if(a>b){
+        nb_sub=(a-b)/dx;
+        ai=b;
+    }
+    double bi=a+dx;
+    for(int i=0;i<nb_sub;i++){
+        double mid=(bi-ai)/2;
+        res+=(bi-ai)*f(mid);
+        ai=bi;
+        bi+=dx;
+    }
+    return res;
+}
+
 double integrate_trap(double (*f)(double), double a, double b, double dx){
 	double n;
 	double ai=a;
