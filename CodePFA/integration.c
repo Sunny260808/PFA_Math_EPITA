@@ -1,9 +1,15 @@
 #define INTEGRATION_C
 #include "integration.h"
+#include <string.h>
 
 bool setQuadFormula(QuadFormula* qf, char* name)
 {
-  return true;
+    if(!strcmp(name,"left")||!strcmp(name,"right")||!strcmp(name,"middle")||!strcmp(name,"trapezes")||!strcmp(name,"simpson")||!strcmp(name,"gauss2")||!strcmp(name,"gauss3")){
+        strcpy(qf->name,name);
+        return true;
+    }
+    else
+        return false;
 }
 
 /* This function is not required ,but it may useful to debug */
@@ -22,12 +28,27 @@ void printQuadFormula(QuadFormula* qf)
 */
 double integrate(double (*f)(double), double a, double b, int N, QuadFormula* qf)
 {
-  return 0.0;
+    double dx=(b-a)/N;
+  return integrate_dx(f,a,b,dx,qf);
 }
 
 double integrate_dx(double (*f)(double), double a, double b, double dx, QuadFormula* qf)
 {
-  return 0.0;
+    if(!strcmp(qf->name,"left"))
+        return integrate_left(f,a,b,dx);
+    else if(!strcmp(qf->name,"right"))
+        return integrate_right(f,a,b,dx);
+    else if(!strcmp(qf->name,"middle"))
+        return integrate_middle(f,a,b,dx);
+    else if(!strcmp(qf->name,"trapezes"))
+        return integrate_trap(f,a,b,dx);
+    else if(!strcmp(qf->name,"simpson"))
+        return integrate_simp(f,a,b,dx);
+    else if(!strcmp(qf->name,"gauss2"))
+        return integrate_inter2(f,a,b,dx);
+    else if(!strcmp(qf->name,"gauss3"))
+        return integrate_inter3(f,a,b,dx);
+    return 0.0;
 }
 
 double integrate_left(double (*f)(double), double a, double b, double dx){
