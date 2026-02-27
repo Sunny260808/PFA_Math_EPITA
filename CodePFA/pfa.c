@@ -14,9 +14,12 @@
           interval [a,b], when computing the integration.
           The number of subdivisions will be N such that (b-a)/N ~ dt
 */
+
 bool init_integration(char* quadrature, double dt)
-{ 
-  return true;
+{
+	setQuadFormula(&pfaQF, quadrature);
+	pfa_dt=dt;
+	return true;
 }
 
 
@@ -30,7 +33,7 @@ double phi(double x)
 /* Cumulative distribution function of the normal distribution */
 double PHI(double x)
 {
-  return 0.0;
+  return 0.5+integrate_dx(phi, 0, x, pfa_dt, &pfaQF);
 }
 
 /* =====================================
@@ -51,6 +54,7 @@ double optionPrice(Option* option)
 */
 double clientPDF_X(InsuredClient* client, double x)
 {
+	exp((log(x)-client->mu
   return 0.0;
 }
 

@@ -8,5 +8,7 @@
 /* Code here anything you want to test your pfa functions and to show your numerical results */
 int main()
 {
-  return 0;
+	printf("%d\n",init_integration("trapezes", 0.1));
+	printf("%f\n", PHI(0));
+	return 0;
 }
